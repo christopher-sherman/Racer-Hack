@@ -25,13 +25,18 @@ public class NewBehaviourScript : MonoBehaviour
 	void Move()
 	{
 		print("Move");
-		transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, moveSpeed * Time.deltaTime);
+		transform.position = Vector3.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, moveSpeed * Time.deltaTime);
+		
+		// Next question
+		
 
 		if (transform.position == waypoints [waypointIndex].transform.position) {
 			waypointIndex += 1;
+			print("Move 1");
 		}
 				
 		if (waypointIndex == waypoints.Length)
 			waypointIndex = 0;
+			print("reset");
 	}
 }
