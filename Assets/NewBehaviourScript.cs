@@ -5,38 +5,36 @@ using UnityEngine;
 public class NewBehaviourScript : MonoBehaviour
 {
     [SerializeField]
-	Transform[] waypoints;
+    Transform[] waypoints;
 
-	[SerializeField]
-	float moveSpeed = 2f;
+    [SerializeField]
+    float moveSpeed = 2f;
 
-	int waypointIndex = 0;
+    int waypointIndex = 0;
 
-	void Start() {
-		print("Start");
-		transform.position = waypoints [waypointIndex].transform.position;
-	}
+    void Start() {
+        print("Start");
+        transform.position = waypoints [waypointIndex].transform.position;
+    }
 
-	void Update() {
-		print("Update");
-		Move();
-	}
+    void Update() {
+        print("Update");
+        Move();
+    }
 
-	void Move()
-	{
-		print("Move");
-		transform.position = Vector3.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, moveSpeed * Time.deltaTime);
-		
-		// Next question
-		
+    void Move()
+    {
+        print("Move");
+        transform.position = Vector3.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, moveSpeed * Time.deltaTime);
 
-		if (transform.position == waypoints [waypointIndex].transform.position) {
-			waypointIndex += 1;
-			print("Move 1");
-		}
-				
-		if (waypointIndex == waypoints.Length)
-			waypointIndex = 0;
-			print("reset");
-	}
+
+        if (transform.position == waypoints [waypointIndex].transform.position) {
+            waypointIndex += 1;
+            print("Move 1");
+        }
+
+        if (waypointIndex == waypoints.Length)
+            waypointIndex = 0;
+            print("reset");
+    }
 }
