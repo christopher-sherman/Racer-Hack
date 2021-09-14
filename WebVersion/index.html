@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+    <script src="codemirror-5.62.3/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-5.62.3/lib/codemirror.css">
+    <script src="codemirror-5.62.3/mode/clike/clike.js"></script>
+    <link href="codemirror-5.62.3/theme/darcula.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="src/style.css">
+
+    <!-- Script linking FIrebase to WebPage -->
+    <script src="src/index.js" type="module"></script>
+    <script src="src/code.js"></script>
+</head>
+
+<body>
+
+    <div class="left">
+        <div class="gamescreen">
+        <iframe mozallowfullscreen="true" allow="autoplay; fullscreen" src="/racerhackgui/index.html"
+        style="border:0px #000000 none;" name="Racer Hack" scrolling="no" msallowfullscreen="true"
+        allowfullscreen="true" webkitallowfullscreen="true" allowtransparency="true" frameborder="0" marginheight="px"
+        marginwidth="0px" height="300px" width="100%"></iframe>
+        </div>
+        <div class="question" id="question">
+        </div>
+    </div>
+
+    <div class="programming">
+        
+    <textarea id="codeeditor">#include <iostream>
+int main()
+{
+    //START CODING HERE!
+    
+}
+</textarea>
+
+<button class="SubmitBtn" type="submit" value="Submit" onclick=submitData()>SUBMIT</button>
+
+        <div class="consoleout">
+            <h2 class="consoletitle">Console Output</h2>
+            <p id="output"></p>
+        </div>
+    </div>
+
+
+    <script>
+        var codeeditor = CodeMirror.fromTextArea(document.getElementById('codeeditor'),{
+            mode: "clike",
+            theme: "darcula",
+            lineNumbers: true,
+        });
+    </script>
+    <div id="snackbarCorrect">Correct!</div>
+    <div id="snackbarWrong">Try again!</div>
+    <div id="hidden" class="hidden"></div>
+    <div id="hidden2" class="hidden2"></div>
+</body>
+</html>
