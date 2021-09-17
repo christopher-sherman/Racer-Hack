@@ -9,8 +9,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     [SerializeField]
     float moveSpeed = 2f;
-
-    int waypointIndex = 0;
+    
+    public int waypointIndex = 0;
 
     void Start() {
         print("Start");

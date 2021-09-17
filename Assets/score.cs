@@ -7,9 +7,16 @@ public class score : MonoBehaviour
     public Transform player;
     public Text scoreText;
 
+    public static int userScore = 0;
+
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = waypointIndex;
+        print("Update Score");
+        updateScore();
+    }
+
+    void updateScore(){
+        scoreText.text = userScore.ToString();
     }
 }
