@@ -11,6 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     float moveSpeed = 2f;
     
     public int waypointIndex = 0;
+    public static int playerScore = -1000;
 
     void Start() {
         print("Start");
@@ -19,7 +20,10 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update() {
         print("Update");
-        Move();
+        
+        if (waypointIndex < waypoints.Length){
+            Move();
+        }
     }
 
     void Move()
@@ -27,14 +31,25 @@ public class NewBehaviourScript : MonoBehaviour
         print("Move");
         transform.position = Vector3.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, moveSpeed * Time.deltaTime);
 
+        // if (waypointIndex == 0){
+        //     transform.position = waypoints [waypointIndex].transform.position;
+        // }
+
+
 
         if (transform.position == waypoints [waypointIndex].transform.position) {
-            waypointIndex += 1;
+            waypointIndex++;
+            playerScore += 1000;
             print("Move 1");
+            
         }
-
-        if (waypointIndex == waypoints.Length)
-            waypointIndex = 0;
-            print("reset");
+ 
+        // if (waypointIndex == waypoints.Length){
+        //     waypointIndex = 0;
+        //     playerScore = -1000;
+        //     print("reset");
+        // }
+            
+            
     }
 }
