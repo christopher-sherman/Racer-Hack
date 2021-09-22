@@ -39,9 +39,9 @@ public class NewBehaviourScript : MonoBehaviour
 
         if (transform.position == waypoints [waypointIndex].transform.position) {
             waypointIndex++;
-            playerScore += 1000;
+            playerScore += 1000 - (int)Time.deltaTime;
             print("Move 1");
-            
+
         }
  
         // if (waypointIndex == waypoints.Length){
@@ -52,4 +52,5 @@ public class NewBehaviourScript : MonoBehaviour
             
             
     }
+
 }
