@@ -31,16 +31,18 @@ const hintButton = document.querySelector('#show-hint');
 const finishButton = document.querySelector('#game-end');
 const reviewQuestions = document.querySelector('#review-questions');
 
-let gameNum = 1;
-let topicNum = 1;
-let difficultyNum = 1;
-let playerQuestionNumber = 1;
-let showHint = 0;
-let questionNum;
-let topic;
-let difficulty;
-let checkingQuestion = [];
-let questionsDisplayed = 1;
+const gameProperties = {
+    gameNum: 1,
+    topicNum: 1,
+    difficultyNum: 1,
+    playerQuestionNumber: 1,
+    showHint: 0,
+    questionNum: 1,
+    topic: "",
+    difficulty: "",
+    checkingQuestion: [],
+    questionsDisplayed: 1
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -63,75 +65,47 @@ const retrieveAns = onSnapshot(doc(db, "Questions", "Arrays", "Easy", "010101"),
 // });
 var send = hidden2.textContent || hidden2.innerText;
 if (send === "1") {  //write to Firebase
-    await setDoc(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + gameNum + '- Question ' + playerQuestionNumber), {
+    await setDoc(doc(db, "Player", "Player 2", 'Past Attempts', 'Game ' + gameProperties.gameNum + '- Question ' + gameProperties.playerQuestionNumber), {
         playerAnswer: document.getElementById("codeeditor").value, //input for code editor
-        playerQuestion: '0' + topicNum + '0' + difficultyNum + '0' + questionNum
+        playerQuestion: '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum
     }, {merge: true});
 }
 
 
 // Siew Hean
 
-function checkSoreAndDisplayQuestions() {
-    const checkingScore = onSnapshot(doc(db, "Player", "Player 1"), (doc) => {
-        let playerScore = doc.data().Score;
-        if (playerScore < 700) {
-            allocatingQuestions(1, "Easy");
-        }
-        if (playerScore >= 700 && playerScore < 3000) {
-            allocatingQuestions(2, "Medium");
-        }
-        if (playerScore >= 3000) {
-            allocatingQuestions(3, "Hard");
-        }
-    });
+function allocateTopic(gameProperties){
+    if(gameProperties.topicNum === 1)
+        gameProperties.topic = "Arrays";
+    if(gameProperties.topicNum === 2)
+        gameProperties.topic = "Functions";
+    if(gameProperties.topicNum === 3)
+        gameProperties.topic = "Operators";
 }
 
-function outputQuestion() {
-    checkSoreAndDisplayQuestions();
-    console.log("Topic : " + topic);
-    console.log("Difficulty: " + difficulty);
-    console.log("Topic Number: " + topicNum);
-    console.log("Difficulty Number: " + difficultyNum);
-    console.log("Question Number: " + questionNum);
-    const accessingQuestion = onSnapshot(doc(db, "Questions", "Arrays", "Easy", '0' + topicNum + '0' + difficultyNum + '0' + questionNum), (doc) => {
-        let question = document.createElement('body');
-        question.textContent = doc.data().Question;
-        if (questionNum === 1)
-            displayQuestion.appendChild(question);
-        if (questionNum > 1) {
-            displayQuestion.replaceWith(question);
-        }
-        console.log("Question: " + questionsDisplayed);
-    })
+function allocatingQuestions(difficult, gameProperties) {
+    gameProperties.topicNum = randomNumberGenerator(1, 4);
+    allocateTopic(gameProperties);
+    gameProperties.questionNum = randomNumberGenerator(1, 5);
+    let beforeChecking = '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum;
+    if (gameProperties.questionsDisplayed > 1)
+        checkForDuplicates(beforeChecking, gameProperties);
+    gameProperties.checkingQuestion[gameProperties.questionsDisplayed - 1] = '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum;
+    console.log("Checking Question: " + gameProperties.checkingQuestion);
+    gameProperties.difficulty = difficult;
+    console.log("Topic: " + gameProperties.topic);
+    console.log("Question number: " + gameProperties.questionNum);
+    console.log("Difficulty: " + gameProperties.difficulty);
+    gameProperties.questionsDisplayed++;
 }
 
-function randomNumberGenerator(min, max) {
-    let randomNum = Math.random() * (max - min) + min;
-    return Math.floor(randomNum);
-}
-
-function allocateTopic(num) {
-    switch (num) {
-        case 1:
-            topic = "Arrays";
-            break;
-        case 2:
-            topic = "Functions";
-            break;
-        case 3:
-            topic = "Operators";
-            break;
-    }
-}
-
-function checkForDuplicates(question, checkingQuestion2) {
+function checkForDuplicates(question, gameProperties) {
     let duplicates;
     let total = 0;
     do {
         duplicates = false;
-        for (let i = 1; i < questionsDisplayed; i++) { // Check the for loops
-            if (checkingQuestion2[i] === question) {
+        for (let i = 1; i < gameProperties.questionsDisplayed; i++) { // Check the for loops
+            if (gameProperties.checkingQuestion[i] === question) {
                 duplicates = true;
                 console.log(question);
                 break;
@@ -140,10 +114,10 @@ function checkForDuplicates(question, checkingQuestion2) {
         }
         if (duplicates === true) {
             console.log("Check 3");
-            questionNum = randomNumberGenerator(1, 5);
-            topicNum = randomNumberGenerator(1, 4);
-            topic = allocateTopic(topicNum);
-            question = '0' + topicNum + '0' + difficultyNum + '0' + questionNum;
+            gameProperties.questionNum = randomNumberGenerator(1, 5);
+            gameProperties.topicNum = randomNumberGenerator(1, 4);
+            allocateTopic(gameProperties.topicNum);
+            question = '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum;
         }
         console.log("Check 4");
         total++;
@@ -151,42 +125,86 @@ function checkForDuplicates(question, checkingQuestion2) {
     while (duplicates === true);
 }
 
-function allocatingQuestions(difficultNum, difficult) {
-    topicNum = randomNumberGenerator(1, 4);
-    topic = allocateTopic(topicNum);
-    questionNum = randomNumberGenerator(1, 5);
-    let beforeChecking = '0' + topicNum + '0' + difficultyNum + '0' + questionNum;
-    if (questionsDisplayed > 1)
-        checkForDuplicates(beforeChecking, checkingQuestion);
-    checkingQuestion[questionsDisplayed - 1] = '0' + topicNum + '0' + difficultyNum + '0' + questionNum;
-    console.log("Checking Question: " + checkingQuestion);
-    difficulty = difficult;
-    console.log("Score: Less than 700");
-    console.log("Topic: " + topic);
-    questionsDisplayed++;
+function checkScoreAndDisplayQuestions(gameProperties) {
+    const checkingScore = onSnapshot(doc(db, "Player", "Player 1"), (doc) => {
+        let playerScore = doc.data().Score;
+        if (playerScore < 700) {
+            allocatingQuestions("Easy", gameProperties);
+        }
+        if (playerScore >= 700 && playerScore < 3000) {
+            allocatingQuestions("Medium", gameProperties);
+        }
+        if (playerScore >= 3000) {
+            allocatingQuestions("Hard", gameProperties);
+        }
+    });
 }
 
-outputQuestion();
+function outputQuestion(gameProperties) {
+    console.log("Topic: " + gameProperties.topic);
+    console.log("Difficulty: " + gameProperties.difficulty);
+    console.log("Topic Number: " + gameProperties.topicNum);
+    console.log("Difficulty Number: " + gameProperties.difficultyNum);
+    console.log("Question Number: " + gameProperties.questionNum);
+    const accessingQuestion = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
+        let question = document.createElement('body');
+        question.textContent = doc.data().Question;
+        console.log(gameProperties.questionNum);
+        // if (gameProperties.questionNum === 0)
+            displayQuestion.appendChild(question);
+        // if (gameProperties.questionNum > 0) {
+        //     console.log(question)
+        //     displayQuestion.replaceWith(question);
+        // }
+        console.log("Question: " + gameProperties.questionsDisplayed);
+    })
+}
 
-nextButton.addEventListener('submit', (e) => {
+function randomNumberGenerator(min, max) {
+    let randomNum = Math.random() * (max - min) + min;
+    return Math.floor(randomNum);
+}
+
+checkScoreAndDisplayQuestions(gameProperties);
+outputQuestion(gameProperties);
+
+nextButton.addEventListener("click", (e) => {
     e.preventDefault();
-    playerQuestionNumber++;
-    showHint--;
+    gameProperties.playerQuestionNumber++;
+    gameProperties.showHint = 0;
     console.log("");
-    outputQuestion(questionNum);
+    checkScoreAndDisplayQuestions(gameProperties);
+    outputQuestion(gameProperties);
 });
+
+
+// hintButton.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (gameProperties.showHint === 0) {
+//         const accessingHint = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
+//             let question = document.createElement('body');
+//             question.textContent = doc.data().Hint;
+//             displayQuestion.appendChild(question);
+//         })
+//         gameProperties.showHint++;
+//     }
+// });
 
 hintButton.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (showHint === 0) {
-        const accessingHint = onSnapshot(doc(db, "Questions", topic, difficulty, '0' + topicNum + '0' + difficultyNum + '0' + questionNum), (doc) => {
+    if (gameProperties.showHint === 0) {
+        // const accessingQuestion = db.collection('Questions').doc('Arrays').collection('Easy').doc('0' + gameProperties.topic + '0' + gameProperties.difficulty + '0' + gameProperties.questionNum);
+        // const doc = accessingQuestion.get().then(doc => {
+        console.log(gameProperties.topic)
+        console.log(gameProperties.difficulty)
+        const accessingHint = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
             // let li = document.createElement('body');
             let question = document.createElement('body');
             question.textContent = doc.data().Hint;
             // li.appendChild(question);
-            displayQuestion.appendChild(question);
+            displayQuestion.append(question);
         })
-        showHint++;
+        gameProperties.showHint++;
     }
 });
 
@@ -201,6 +219,7 @@ displayResults.addEventListener('submit', (e) => {
 reviewQuestions.addEventListener('submit', (e) => {
     e.preventDefault();
 });
+
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal

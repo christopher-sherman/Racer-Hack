@@ -31,101 +31,134 @@ const displayQuestionResultPage = document.querySelector('#display-question-resu
 const displayPlayerAnswerResultPage = document.querySelector('#display-player-answer-result-page');
 const displayModelAnswerResultPage = document.querySelector('#display-model-answer-result-page');
 
-let gameNum = 1;
+const object = {
+    gameNum: 1,
+    playerQuestionNumber: 2,
+    topic: "Arrays",
+    difficulty: "Easy",
+    topicNum: "1",
+    difficultyNum: "1",
+    questionNum: "1"
+}
 let playerQuestionNumber = 1;
-let topic;
-let difficulty;
-let topicNum = 1;
-let difficultyNum = 1;
-let questionNum = 1;
+retrieveQuestionNumber(object, playerQuestionNumber);
+allocateTopic(object);
+allocateDifficulty(object);
+retrieveQuestion(object);
+retrievePlayerAnswer(object);
+retrieveModelAnswer(object);
 
-retrieveQuestionNumber();
-retrieveQuestion();
-retrievePlayerAnswer();
-retrieveModelAnswer();
-
-function retrieveQuestionNumber() {
-    const gettingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + gameNum + '- Question ' + playerQuestionNumber), (doc) => {
+function retrieveQuestionNumber(object, questionNumber) {
+    const gettingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + questionNumber), (doc) => {
         let gettingPlayerQuestion = doc.data().playerQuestion;
         let secondZero = gettingPlayerQuestion.indexOf("0", 1);
         let thirdZero = gettingPlayerQuestion.indexOf("0", secondZero + 1);
         let currentPosition;
         if (thirdZero - secondZero === 1) {
-            topicNum = gettingPlayerQuestion.substr(1, thirdZero - 1);
+            object.topicNum = gettingPlayerQuestion.substr(1, thirdZero - 1);
             currentPosition = thirdZero;
         } else if (thirdZero - secondZero !== 1) {
-            topicNum = gettingPlayerQuestion.substr(1, secondZero - 1);
+            object.topicNum = gettingPlayerQuestion.substr(1, secondZero - 1);
             currentPosition = secondZero;
         }
-        difficultyNum = gettingPlayerQuestion.substr(currentPosition + 1, 1);
+        object.difficultyNum = gettingPlayerQuestion.substr(currentPosition + 1, 1);
         currentPosition = currentPosition + 2;
-        questionNum = gettingPlayerQuestion.substr(currentPosition + 1, gettingPlayerQuestion.length - currentPosition);
-        allocateTopic(topicNum);
-        allocateDifficulty(difficultyNum);
-        console.log("Topic Number: " + topicNum);
-        console.log("Difficulty Num: " + difficultyNum);
-        console.log("Question Number: " + questionNum);
-        console.log("Topic: " + topic);
-        console.log("Difficulty: " + difficulty);
+        object.questionNum = gettingPlayerQuestion.substr(currentPosition + 1, gettingPlayerQuestion.length - currentPosition);
+        // console.log(object.questionNum);
     });
 }
 
 function allocateTopic(num) {
-    console.log("Number: " + num); // num = 1
     switch (num) {
-        case 1:
-            topic = "Arrays";
+        case "1":
+            num.topic = "Arrays";
             break;
-        case 2:
-            topic = "Functions";
+        case "2":
+            num.topic = "Functions";
             break;
-        case 3:
-            topic = "Operators";
+        case "3":
+            num.topic = "Operators";
             break;
     }
-    console.log(topic); // logs undefined
 }
 
 function allocateDifficulty(num) {
     switch (num) {
-        case 1:
-            difficulty = "Easy";
+        case "1":
+            num.difficulty = "Easy";
             break;
-        case 2:
-            difficulty = "Medium";
+        case "2":
+            num.difficulty = "Medium";
             break;
-        case 3:
-            difficulty = "Hard";
+        case "3":
+            num.difficulty = "Hard";
             break;
     }
 }
 
-function retrieveQuestion() {
-    console.log("Topic Number:" + topicNum);
-    console.log("Difficulty Num:" + difficultyNum);
-    console.log("Question Number: " + questionNum);
-    const accessingQuestion = onSnapshot(doc(db, "Questions", "Arrays", "Easy", '0' + topicNum + '0' + difficultyNum + '0' + questionNum), (doc) => {
+function retrieveQuestion(object) {
+    console.log("Question number: " + object.questionNum); //logs 1
+    const accessingQuestion = onSnapshot(doc(db, "Questions", object.topic, object.difficulty, '0' + object.topicNum + '0' + object.difficultyNum + '0' + object.questionNum), (doc) => {
+        console.log("Question number: " + object.questionNum); // logs 2
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
         displayQuestionResultPage.appendChild(question);
-        console.log(displayQuestionResultPage)
+        console.log("Question number: " + object.questionNum);
     });
 }
 
-function retrievePlayerAnswer() {
-    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + gameNum + '- Question ' + playerQuestionNumber), (doc) => {
+function retrievePlayerAnswer(object) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + object.playerQuestionNumber), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().playerAnswer;
         displayPlayerAnswerResultPage.appendChild(question);
-        console.log(displayPlayerAnswerResultPage)
     });
 }
 
-function retrieveModelAnswer() {
-    const accessingQuestion = onSnapshot(doc(db, "Questions", "Arrays", "Easy", '0' + topicNum + '0' + difficultyNum + '0' + questionNum), (doc) => {
+function retrieveModelAnswer(object) {
+    console.log("Question number: " + object.questionNum);
+    const accessingQuestion = onSnapshot(doc(db, "Questions", object.topic, object.difficulty, '0' + object.topicNum + '0' + object.difficultyNum + '0' + object.questionNum), (doc) => {
+        console.log("Question number: " + object.questionNum);
         let question = document.createElement('body');
         question.textContent = doc.data().Solution;
         displayModelAnswerResultPage.appendChild(question);
-        console.log(displayModelAnswerResultPage)
+        console.log("Question number: " + object.questionNum);
     });
 }
+
+const button1 = document.querySelector('#button1');
+const button2 = document.querySelector('#button2');
+const button3 = document.querySelector('#button3');
+const button4 = document.querySelector('#button4');
+
+button1.addEventListener("click", (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 1);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object);
+    retrieveModelAnswer(object);
+});
+
+button2.addEventListener('click', (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 2);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object);
+    retrieveModelAnswer(object);
+});
+
+button3.addEventListener("click", (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 3);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object);
+    retrieveModelAnswer(object);
+});
+
+button4.addEventListener("click", (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 4);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object);
+    retrieveModelAnswer(object);
+});

@@ -279,23 +279,6 @@ h1 {
     width: 15%;
 }
 
-.col-4 {
-    width: 33.33%;
-}
-
-.col-5 {
-    width: 41.66%;
-}
-
-.col-6 {
-    width: 50%;
-}
-
-.col-7 {
-    width: 58.33%;
-}
-
-
 html {
     font-family: "Lucida Sans", sans-serif;
 }
@@ -318,3 +301,4 @@ html {
     background-color: white; /* Green */
     color: #4caf50;
 }
+
