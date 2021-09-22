@@ -45,7 +45,7 @@ retrieveQuestionNumber(object, playerQuestionNumber);
 allocateTopic(object);
 allocateDifficulty(object);
 retrieveQuestion(object);
-retrievePlayerAnswer(object);
+retrievePlayerAnswer(object, 1);
 retrieveModelAnswer(object);
 
 function retrieveQuestionNumber(object, questionNumber) {
@@ -107,8 +107,9 @@ function retrieveQuestion(object) {
     });
 }
 
-function retrievePlayerAnswer(object) {
-    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + object.playerQuestionNumber), (doc) => {
+function retrievePlayerAnswer(object, questionNumber) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + questionNumber), (doc) => {
+        console.log("Player Question Number: " + playerQuestionNumber);
         let question = document.createElement('body');
         question.textContent = doc.data().playerAnswer;
         displayPlayerAnswerResultPage.appendChild(question);
@@ -135,7 +136,7 @@ button1.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 1);
     retrieveQuestion(object);
-    retrievePlayerAnswer(object);
+    retrievePlayerAnswer(object,1);
     retrieveModelAnswer(object);
 });
 
@@ -143,7 +144,7 @@ button2.addEventListener('click', (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 2);
     retrieveQuestion(object);
-    retrievePlayerAnswer(object);
+    retrievePlayerAnswer(object,2);
     retrieveModelAnswer(object);
 });
 
@@ -151,7 +152,7 @@ button3.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 3);
     retrieveQuestion(object);
-    retrievePlayerAnswer(object);
+    retrievePlayerAnswer(object,3);
     retrieveModelAnswer(object);
 });
 
@@ -159,6 +160,6 @@ button4.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 4);
     retrieveQuestion(object);
-    retrievePlayerAnswer(object);
+    retrievePlayerAnswer(object,4);
     retrieveModelAnswer(object);
 });

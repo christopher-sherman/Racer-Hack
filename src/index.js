@@ -35,7 +35,7 @@ const gameProperties = {
     gameNum: 1,
     topicNum: 1,
     difficultyNum: 1,
-    playerQuestionNumber: 1,
+    playerQuestionNumber: 0,
     showHint: 0,
     questionNum: 1,
     topic: "",
@@ -149,12 +149,14 @@ function outputQuestion(gameProperties) {
     const accessingQuestion = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
-        console.log(gameProperties.questionNum);
-        // if (gameProperties.questionNum === 0)
-            displayQuestion.appendChild(question);
-        // if (gameProperties.questionNum > 0) {
-        //     console.log(question)
-        //     displayQuestion.replaceWith(question);
+        console.log(gameProperties.playerQuestionNumber);
+        // if (gameProperties.questionNum === 1) {
+        //     displayQuestion.appendChild(question);
+        //     console.log("Hey");
+        // }
+        // else{
+        // document.body.innerHTML = document.body.innerHTML.replace(displayQuestion, question);
+            displayQuestion.replaceWith(displayQuestion,question);
         // }
         console.log("Question: " + gameProperties.questionsDisplayed);
     })
