@@ -25,11 +25,10 @@ const firebaseConfig = {
 };
 
 const displayQuestion = document.querySelector('#display-question');
-const displayResults = document.querySelector('#results-page');
 const nextButton = document.querySelector('#next-question');
 const hintButton = document.querySelector('#show-hint');
 const finishButton = document.querySelector('#game-end');
-const reviewQuestions = document.querySelector('#review-questions');
+const timer = document.querySelector('#txt');
 
 const gameProperties = {
     gameNum: 1,
@@ -41,45 +40,31 @@ const gameProperties = {
     topic: "",
     difficulty: "",
     checkingQuestion: [],
-    questionsDisplayed: 1
+    questionsDisplayed: 1,
+    start: 1
 }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// const retrieveQns = onSnapshot(doc(db, "Questions", "Arrays", "Easy", '0' + topic + '0' + difficulty + '0' + questionNum), (doc) => {
-//     console.log("Question: ", doc.data().Question);
-//     question.innerHTML = "<p>" + doc.data().Question + "</p>";
-// });
-const retrieveAns = onSnapshot(doc(db, "Questions", "Arrays", "Easy", "010101"), (doc) => {
-    //to be removed to hide answer from console
-    //console.log("Answer: ", doc.data().Solution);
-    hidden.innerHTML = doc.data().Solution;
-});
-// const q = query(collection(db, "Questions","Arrays","Easy"), where("Solution", "==", "[1,2,3,4,5,6,7,8,9]"));
-// const querySnapshot = await getDocs(q);
-// querySnapshot.forEach((doc) => {
-//     // doc.data() is never undefined for query doc snapshots
-//     console.log(doc.id, " => ", doc.data());
-// });
 var send = hidden2.textContent || hidden2.innerText;
-if (send === "1") {  //write to Firebase
-    await setDoc(doc(db, "Player", "Player 2", 'Past Attempts', 'Game ' + gameProperties.gameNum + '- Question ' + gameProperties.playerQuestionNumber), {
+    // await setDoc(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + gameProperties.gameNum + '- Question ' + gameProperties.playerQuestionNumber), {
+    await setDoc(doc(db, "Player", "Player 1", 'Past Attempts', 'Game 1- Question 1'), {
         playerAnswer: document.getElementById("codeeditor").value, //input for code editor
-        playerQuestion: '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum
+        playerQuestion: '010101'
+        // playerQuestion: '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum
     }, {merge: true});
-}
 
 
 // Siew Hean
 
-function allocateTopic(gameProperties){
-    if(gameProperties.topicNum === 1)
+function allocateTopic(gameProperties) {
+    if (gameProperties.topicNum === 1)
         gameProperties.topic = "Arrays";
-    if(gameProperties.topicNum === 2)
+    if (gameProperties.topicNum === 2)
         gameProperties.topic = "Functions";
-    if(gameProperties.topicNum === 3)
+    if (gameProperties.topicNum === 3)
         gameProperties.topic = "Operators";
 }
 
@@ -149,15 +134,7 @@ function outputQuestion(gameProperties) {
     const accessingQuestion = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
-        console.log(gameProperties.playerQuestionNumber);
-        // if (gameProperties.questionNum === 1) {
-        //     displayQuestion.appendChild(question);
-        //     console.log("Hey");
-        // }
-        // else{
-        // document.body.innerHTML = document.body.innerHTML.replace(displayQuestion, question);
-            displayQuestion.replaceWith(displayQuestion,question);
-        // }
+        displayQuestion.append((gameProperties.playerQuestionNumber-1) , question);
         console.log("Question: " + gameProperties.questionsDisplayed);
     })
 }
@@ -167,58 +144,58 @@ function randomNumberGenerator(min, max) {
     return Math.floor(randomNum);
 }
 
+function checkingAnswer(gameProperties) {
+    const accessingQuestion = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
+    let question = document.createElement('body');
+    question = doc.data().Question;
+    })
+}
+
+function scoringSystem(gameProperties){
+    const accessingQuestion = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
+})
+}
+
+function timedCount() {
+     clearTimeout(timedCount);
+     clearInterval(timedCount);
+    t = setTimeout(timedCount, 1000);
+    console.log(t-28);
+  }
+
+timedCount();
+
+scoringSystem(gameProperties);
+if(gameProperties.start === 1){
 checkScoreAndDisplayQuestions(gameProperties);
 outputQuestion(gameProperties);
+gameProperties.start++;
+// checkingAnswer(gameProperties);
+}
 
 nextButton.addEventListener("click", (e) => {
     e.preventDefault();
     gameProperties.playerQuestionNumber++;
     gameProperties.showHint = 0;
+    timedCount();
     console.log("");
     checkScoreAndDisplayQuestions(gameProperties);
     outputQuestion(gameProperties);
 });
 
-
-// hintButton.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (gameProperties.showHint === 0) {
-//         const accessingHint = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
-//             let question = document.createElement('body');
-//             question.textContent = doc.data().Hint;
-//             displayQuestion.appendChild(question);
-//         })
-//         gameProperties.showHint++;
-//     }
-// });
-
 hintButton.addEventListener('submit', (e) => {
     e.preventDefault();
     if (gameProperties.showHint === 0) {
-        // const accessingQuestion = db.collection('Questions').doc('Arrays').collection('Easy').doc('0' + gameProperties.topic + '0' + gameProperties.difficulty + '0' + gameProperties.questionNum);
-        // const doc = accessingQuestion.get().then(doc => {
-        console.log(gameProperties.topic)
-        console.log(gameProperties.difficulty)
         const accessingHint = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
-            // let li = document.createElement('body');
-            let question = document.createElement('body');
-            question.textContent = doc.data().Hint;
-            // li.appendChild(question);
-            displayQuestion.append(question);
+            let hint = document.createElement('body');
+            hint.textContent = doc.data().Hint;
+            displayQuestion.append(hint);
         })
         gameProperties.showHint++;
     }
 });
 
 finishButton.addEventListener('submit', (e) => {
-    e.preventDefault();
-});
-
-displayResults.addEventListener('submit', (e) => {
-    e.preventDefault();
-});
-
-reviewQuestions.addEventListener('submit', (e) => {
     e.preventDefault();
 });
 
