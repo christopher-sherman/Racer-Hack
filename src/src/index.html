@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<head>
+    <script src="codemirror-5.62.3/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-5.62.3/lib/codemirror.css">
+    <script src="codemirror-5.62.3/mode/clike/clike.js"></script>
+    <link href="codemirror-5.62.3/theme/darcula.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="src/style.css">
+
+    <!-- Script linking FIrebase to WebPage -->
+    <script src="src/index.js" type="module"></script>
+    <script src="src/code.js"></script>
+</head>
+
+<body>
+
+<div class="left">
+    <div class="gamescreen">
+        <iframe mozallowfullscreen="true" allow="autoplay; fullscreen" src="/Racer-Hack-main/WebVersion/racerhackgui/index.html"
+        style="border:0px #000000 none;" name="Racer Hack" scrolling="no" msallowfullscreen="true"
+        allowfullscreen="true" webkitallowfullscreen="true" allowtransparency="true" frameborder="0" marginheight="0px"
+        marginwidth="0px" height="480px" width="100%"></iframe>
+        </div>
+    </div>
+</div>
+<div class="question" id="question"></div>
+<div class="programming">
+
+    <textarea id="codeeditor">#include <iostream>
+int main()
+{
+    //START CODING HERE!
+
+}
+</textarea>
+
+    <button class="SubmitBtn" type="submit" value="Submit" onclick="submitData(); stopCount()">SUBMIT</button>
+    <button id="next-question" class="NextBtn" type="submit" onclick="timedCount()">NEXT</button>
+    <form id="show-hint">
+        <button class="NextBtn">Show Hint</button>
+    </form>
+    <div class="consoleout">
+        <h2 class="consoletitle">Console Output</h2>
+        <p id="output"></p>
+    </div>
+</div>
+        <!-- <input type="text" id="txt"> -->
+<p>Score: </p>
+<script>
+    var c = 0;
+    var t;
+    var timer_is_on = 0;
+    
+    function timedCount() {
+      document.getElementById("txt").value = c;
+      c = c + 1;
+      t = setTimeout(timedCount, 1000);
+    }
+    
+    function startCount() {
+        timer_is_on = 0;
+        c=0;
+      if (!timer_is_on) {
+        clearTimeout(t)
+        timer_is_on = 1;
+        timedCount();
+      }
+    }
+    
+    function stopCount() {
+      clearTimeout(t);
+      timer_is_on = 0;
+      t = 0;
+    }
+    </script>
+
+<script>
+    var codeeditor = CodeMirror.fromTextArea(document.getElementById('codeeditor'), {
+        mode: "clike",
+        theme: "darcula",
+        lineNumbers: true,
+    });
+</script>
+<div id="snackbarCorrect">Correct!</div>
+<div id="snackbarWrong">Try again!</div>
+<div id="hidden" class="hidden"></div>
+<div id="hidden2" class="hidden2"></div>
+</body>
+
+<p class="question" id="display-question"></p>
+<form id="game-end">
+    <button>Finish</button>
+</form>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 50%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #87fefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <head>
+            <h2 style="text-align:center">Results</h2>
+        </head>
+
+        <div class="content2">
+            <form id="results-page">
+                Your Score:
+                <p>Hi</p>
+            </form>
+        </div>
+        <a href="src/end.html">
+            <button id="review-questions">Review Questions</button>
+        </a>
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            // btn.onclick = function () {
+            //     modal.style.display = "block";
+            // }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+    </div>
+</div>
