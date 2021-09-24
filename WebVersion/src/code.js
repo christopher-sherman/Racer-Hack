@@ -35,8 +35,6 @@ const response = await fetch("https://cors-anywhere.herokuapp.com/https://api.jd
         }
 
         function show(data) {
-        
-    
             document.getElementById("output").innerHTML = data.output; //output string
             userCode = hidden.textContent || hidden.innerText;
             
