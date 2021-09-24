@@ -1,6 +1,6 @@
 # Racer Hack (Naprock-2021-Singapore-Poly-EEE)
 
-Racker Hack is a 2D game that is gamifies process of learning C programming.
+Racker Hack is a 2D game that gamifies the process of learning coding.
 
 ![alt text](https://github.com/christopher-sherman/Racer-Hack/blob/main/Racer_Hack_Unity_game.png)
 
