@@ -40,15 +40,16 @@ const object = {
     difficultyNum: "1",
     questionNum: "1"
 }
-retrieveQuestionNumber(object);
+let playerQuestionNumber = 1;
+retrieveQuestionNumber(object, playerQuestionNumber);
 allocateTopic(object);
 allocateDifficulty(object);
 retrieveQuestion(object);
-retrievePlayerAnswer(object);
+retrievePlayerAnswer(object, 1);
 retrieveModelAnswer(object);
 
-function retrieveQuestionNumber(object) {
-    const gettingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + object.playerQuestionNumber), (doc) => {
+function retrieveQuestionNumber(object, questionNumber) {
+    const gettingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + questionNumber), (doc) => {
         let gettingPlayerQuestion = doc.data().playerQuestion;
         let secondZero = gettingPlayerQuestion.indexOf("0", 1);
         let thirdZero = gettingPlayerQuestion.indexOf("0", secondZero + 1);
@@ -96,8 +97,9 @@ function allocateDifficulty(num) {
 }
 
 function retrieveQuestion(object) {
+    console.log("Question number: " + object.questionNum); //logs 1
     const accessingQuestion = onSnapshot(doc(db, "Questions", object.topic, object.difficulty, '0' + object.topicNum + '0' + object.difficultyNum + '0' + object.questionNum), (doc) => {
-        console.log("Question number: " + object.questionNum);
+        console.log("Question number: " + object.questionNum); // logs 2
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
         displayQuestionResultPage.appendChild(question);
@@ -105,8 +107,9 @@ function retrieveQuestion(object) {
     });
 }
 
-function retrievePlayerAnswer(object) {
-    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + object.playerQuestionNumber), (doc) => {
+function retrievePlayerAnswer(object, questionNumber) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + questionNumber), (doc) => {
+        console.log("Player Question Number: " + playerQuestionNumber);
         let question = document.createElement('body');
         question.textContent = doc.data().playerAnswer;
         displayPlayerAnswerResultPage.appendChild(question);
@@ -123,3 +126,40 @@ function retrieveModelAnswer(object) {
         console.log("Question number: " + object.questionNum);
     });
 }
+
+const button1 = document.querySelector('#button1');
+const button2 = document.querySelector('#button2');
+const button3 = document.querySelector('#button3');
+const button4 = document.querySelector('#button4');
+
+button1.addEventListener("click", (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 1);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object,1);
+    retrieveModelAnswer(object);
+});
+
+button2.addEventListener('click', (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 2);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object,2);
+    retrieveModelAnswer(object);
+});
+
+button3.addEventListener("click", (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 3);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object,3);
+    retrieveModelAnswer(object);
+});
+
+button4.addEventListener("click", (e) => {
+    e.preventDefault();
+    retrieveQuestionNumber(object, 4);
+    retrieveQuestion(object);
+    retrievePlayerAnswer(object,4);
+    retrieveModelAnswer(object);
+});

@@ -34,7 +34,7 @@ const gameProperties = {
     gameNum: 1,
     topicNum: 1,
     difficultyNum: 1,
-    playerQuestionNumber: 0,
+    playerQuestionNumber: 1,
     showHint: 0,
     questionNum: 1,
     topic: "",
