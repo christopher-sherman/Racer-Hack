@@ -181,6 +181,8 @@ nextButton.addEventListener("click", (e) => {
     console.log("");
     checkScoreAndDisplayQuestions(gameProperties);
     outputQuestion(gameProperties);
+    // Unity Call
+    
 });
 
 hintButton.addEventListener('submit', (e) => {

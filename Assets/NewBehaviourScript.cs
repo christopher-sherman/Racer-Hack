@@ -14,43 +14,36 @@ public class NewBehaviourScript : MonoBehaviour
     public static int playerScore = -1000;
 
     void Start() {
-        print("Start");
+        // print("Start");
         transform.position = waypoints [waypointIndex].transform.position;
     }
 
     void Update() {
-        print("Update");
+        // print("Update");
         
         if (waypointIndex < waypoints.Length){
             Move();
         }
     }
 
-    void Move()
-    {
-        print("Move");
+    void Move() {
+        // print("Move");
         transform.position = Vector3.MoveTowards(transform.position, waypoints[waypointIndex].transform.position, moveSpeed * Time.deltaTime);
 
-        // if (waypointIndex == 0){
-        //     transform.position = waypoints [waypointIndex].transform.position;
+
+        // if (transform.position == waypoints [waypointIndex].transform.position) {
+        //     waypointIndex++;
+        //     playerScore += 1000 - (int)Time.deltaTime;
+        //     print("Move 1");
+
         // }
-
-
-
-        if (transform.position == waypoints [waypointIndex].transform.position) {
-            waypointIndex++;
-            playerScore += 1000 - (int)Time.deltaTime;
-            print("Move 1");
-
-        }
  
-        // if (waypointIndex == waypoints.Length){
-        //     waypointIndex = 0;
-        //     playerScore = -1000;
-        //     print("reset");
-        // }
+
             
             
     }
 
+    public void Increment() {
+        waypointIndex++;
+    }
 }
