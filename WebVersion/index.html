@@ -15,11 +15,12 @@
 
 <div class="left">
     <div class="gamescreen">
-        <iframe mozallowfullscreen="true" allow="autoplay; fullscreen" src="/WebVersion/racerhackgui/index.html"
+        <iframe id="racerhackgui" mozallowfullscreen="true" allow="autoplay; fullscreen" src="/WebVersion/racerhackgui/index.html"
         style="border:0px #000000 none;" name="Racer Hack" scrolling="no" msallowfullscreen="true"
         allowfullscreen="true" webkitallowfullscreen="true" allowtransparency="true" frameborder="0" marginheight="0px"
         marginwidth="0px" height="488px" width="100%"></iframe>
     </div>
+    
 </div>
 <div class="question" id="question"></div>
 <div class="programming">
@@ -32,7 +33,7 @@ int main()
 }
 </textarea>
     <button class="SubmitBtn" type="submit" value="Submit" onclick="submitData(); stopCount()">SUBMIT</button>
-    <button id="next-question" class="NextBtn" type="submit" onclick="moveCharacter(); timedCount()">NEXT</button>
+    <button id="next-question" class="NextBtn" type="submit" onclick="movePlayer(); timedCount()">NEXT</button>
     <form id="show-hint">
         <button class="NextBtn">Show Hint</button>
     </form>
@@ -44,10 +45,15 @@ int main()
         <!-- <input type="text" id="txt"> -->
 <p>Score: 0</p>
 <script>
+
     var c = 0;
     var t;
     var timer_is_on = 0;
-    
+
+    function movePlayer() {
+        document.getElementById('racerhackgui').contentWindow.moveCharacter();
+    }
+
     function timedCount() {
       document.getElementById("txt").value = c;
       c = c + 1;
