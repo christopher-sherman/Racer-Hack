@@ -8,7 +8,8 @@
 
     <!-- Script linking FIrebase to WebPage -->
     <script src="src/index.js" type="module"></script>
-    <script src="src/code.js" type="module"></script>
+    <script src="src/code.js"></script>
+    
 </head>
 
 <body>
@@ -31,7 +32,7 @@ int main()
 
 }
 </textarea>
-    <button class="SubmitBtn" type="submit" value="Submit" onclick="submitData(); stopCount()">SUBMIT</button>
+    <button class="SubmitBtn" type="submit" value="Submit" onclick="submitData(); stopCount();checkSolution()">SUBMIT</button>
     <button id="next-question" class="NextBtn" type="submit" onclick="moveCharacter(); timedCount()">NEXT</button>
     <form id="show-hint">
         <button class="NextBtn">Show Hint</button>
@@ -148,7 +149,7 @@ int main()
         <div class="content2">
             <form id="results-page">
                 Your Score:
-                <p>Hi</p>
+                <p></p>
             </form>
         </div>
         <a href="src/end.html">

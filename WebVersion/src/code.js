@@ -1,35 +1,9 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-// import {
-//     getFirestore,
-//     query,
-//     where,
-//     collection,
-//     getDocs,
-//     setDoc,
-//     onSnapshot,
-//     doc
-// } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// const firebaseConfig = {
-//     apiKey: "AIzaSyChVP88vGhW1JGU2aH1befAeAyZLG30aFY",
-//     authDomain: "test-viking.firebaseapp.com",
-//     projectId: "test-viking",
-//     storageBucket: "test-viking.appspot.com",
-//     messagingSenderId: "676279524815",
-//     appId: "1:676279524815:web:0807d7e2d4e7da40cc06ba",
-//     measurementId: "G-7X4CH4NJCW"
-// };
-
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
-
 var importantData = {
   data: undefined,
 }
+let questionNumber = 1;
 
+var userCode;
 async function submitData() {
   var input = codeeditor.getValue();
   var codeinput = "";
@@ -54,7 +28,7 @@ async function submitData() {
     body: raw,
     redirect: 'follow'
   };
-const response = await fetch("https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute", requestOptions);
+  const response = await fetch("https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute", requestOptions);
 
   // var importantData = {
   //   data: await response.json()
@@ -66,16 +40,24 @@ const response = await fetch("https://cors-anywhere.herokuapp.com/https://api.jd
     //loading screen
   }
   show(importantData);
-  writeUserOutput(importantData, gameProperties)
+  // writeUserOutput(importantData, gamePryoperties)
 }
 
-function show(importantData, gameProperties) {
+function show(importantData, userCode) {
   document.getElementById("output").innerHTML = importantData.data.output; //output string
   userCode = hidden.textContent || hidden.innerText;
-  
+  if (questionNumber === 1)
+    userCode = "3,6,9,12";
+  if (questionNumber === 2)
+    userCode = "3";
+  if (questionNumber === 3)
+    userCode = "9";
+  if (questionNumber === 4)
+    userCode = "452.16";
   // const accessingHint = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
   //   userCode = doc.data().Solution;
   // })
+
 
   if (importantData.data.output.normalize() === userCode.normalize()) //checking if string matches solution
   {
@@ -87,12 +69,13 @@ function show(importantData, gameProperties) {
     x.className = "show";
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 1500);
     console.log('Yes');
+    questionNumber++;
   } else {
     var x = document.getElementById("snackbarWrong");
     // Add the "show" class to DIV
     x.className = "show";
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 1500);
-  console.log('No');
+    console.log('No');
   }
 }
 

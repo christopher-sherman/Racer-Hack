@@ -96,34 +96,28 @@ function allocateDifficulty(num) {
     }
 }
 
-function retrieveQuestion(object) {
-    console.log("Question number: " + object.questionNum); //logs 1
-    const accessingQuestion = onSnapshot(doc(db, "Questions", object.topic, object.difficulty, '0' + object.topicNum + '0' + object.difficultyNum + '0' + object.questionNum), (doc) => {
-        console.log("Question number: " + object.questionNum); // logs 2
+function retrieveQuestion(object, questionNumber) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
         displayQuestionResultPage.appendChild(question);
-        console.log("Question number: " + object.questionNum);
     });
 }
 
-function retrievePlayerAnswer(object, questionNumber) {
-    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + questionNumber), (doc) => {
-        console.log("Player Question Number: " + playerQuestionNumber);
+function retrievePlayerAnswer(questionNumber) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().playerAnswer;
         displayPlayerAnswerResultPage.appendChild(question);
     });
 }
 
-function retrieveModelAnswer(object) {
-    console.log("Question number: " + object.questionNum);
-    const accessingQuestion = onSnapshot(doc(db, "Questions", object.topic, object.difficulty, '0' + object.topicNum + '0' + object.difficultyNum + '0' + object.questionNum), (doc) => {
+function retrieveModelAnswer(object, questionNumber) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {        
         console.log("Question number: " + object.questionNum);
         let question = document.createElement('body');
         question.textContent = doc.data().Solution;
         displayModelAnswerResultPage.appendChild(question);
-        console.log("Question number: " + object.questionNum);
     });
 }
 
@@ -135,31 +129,31 @@ const button4 = document.querySelector('#button4');
 button1.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 1);
-    retrieveQuestion(object);
-    retrievePlayerAnswer(object,1);
-    retrieveModelAnswer(object);
+    retrieveQuestion(object, 1);
+    retrievePlayerAnswer(1);
+    retrieveModelAnswer(object, 1);
 });
 
 button2.addEventListener('click', (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 2);
-    retrieveQuestion(object);
-    retrievePlayerAnswer(object,2);
-    retrieveModelAnswer(object);
+    retrieveQuestion(object, 2);
+    retrievePlayerAnswer(2);
+    retrieveModelAnswer(object, 2);
 });
 
 button3.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 3);
-    retrieveQuestion(object);
-    retrievePlayerAnswer(object,3);
-    retrieveModelAnswer(object);
+    retrieveQuestion(object, 3);
+    retrievePlayerAnswer(3);
+    retrieveModelAnswer(object, 3);
 });
 
 button4.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 4);
-    retrieveQuestion(object);
-    retrievePlayerAnswer(object,4);
-    retrieveModelAnswer(object);
+    retrieveQuestion(object, 4);
+    retrievePlayerAnswer(4);
+    retrieveModelAnswer(object, 4);
 });
