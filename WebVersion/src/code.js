@@ -43,6 +43,7 @@ async function submitData() {
   // writeUserOutput(importantData, gamePryoperties)
 }
 
+// THIS FUNCTION WILL CHECK THE ANSWERS. USERCODE IS THE OUTPUT FROM THE CONSOLE
 function show(importantData, userCode) {
   document.getElementById("output").innerHTML = importantData.data.output; //output string
   userCode = hidden.textContent || hidden.innerText;
