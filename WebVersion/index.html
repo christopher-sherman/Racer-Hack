@@ -16,7 +16,7 @@
 
 <div class="left">
     <div class="gamescreen">
-        <iframe mozallowfullscreen="true" allow="autoplay; fullscreen" src="/WebVersion/racerhackgui/index.html"
+        <iframe id="racerhackgui" mozallowfullscreen="true" allow="autoplay; fullscreen" src="/WebVersion/racerhackgui/index.html"
         style="border:0px #000000 none;" name="Racer Hack" scrolling="no" msallowfullscreen="true"
         allowfullscreen="true" webkitallowfullscreen="true" allowtransparency="true" frameborder="0" marginheight="0px"
         marginwidth="0px" height="488px" width="100%"></iframe>
@@ -32,8 +32,8 @@ int main()
 
 }
 </textarea>
-    <button class="SubmitBtn" type="submit" value="Submit" onclick="submitData(); stopCount();checkSolution()">SUBMIT</button>
-    <button id="next-question" class="NextBtn" type="submit" onclick="moveCharacter(); timedCount()">NEXT</button>
+    <button class="SubmitBtn" type="submit" value="Submit" onclick="submitData(); stopCount(); checkSolution()">SUBMIT</button>
+    <button id="next-question" class="NextBtn" type="submit" onclick="movePlayer()">NEXT</button>
     <form id="show-hint">
         <button class="NextBtn">Show Hint</button>
     </form>
@@ -43,12 +43,37 @@ int main()
     </div>
 </div>
         <!-- <input type="text" id="txt"> -->
-<p>Score: 0</p>
+        <p>Score: <span id="playerTotalScore"></span></p>
+        
 <script>
+
     var c = 0;
     var t;
     var timer_is_on = 0;
+
+    // var timeTaken;
+    // var startTime = performance.now();
+    // var endTime;
+    // var totalScore = 0;
+
+    // function calculateScore() {
+    //     endTime = performance.now();
+    //     timeTaken = endTime - startTime;
+    //     totalScore += (1000 - Math.round(timeTaken/1000));
+    //     document.getElementById("playerTotalScore").innerHTML = totalScore;
+    //     startTime = performance.now();
+    // }
+
     
+    document.getElementById("playerTotalScore").innerHTML = totalScore;
+
+
+    function movePlayer(){
+        document.getElementById("racerhackgui").contentWindow.moveCharacter();
+    }
+
+
+
     function timedCount() {
       document.getElementById("txt").value = c;
       c = c + 1;
@@ -148,8 +173,7 @@ int main()
 
         <div class="content2">
             <form id="results-page">
-                Your Score:
-                <p></p>
+                <p>Your Score: <span id="endingScore"></span></p> 
             </form>
         </div>
         <a href="src/end.html">
@@ -182,6 +206,8 @@ int main()
                     modal.style.display = "none";
                 }
             }
+
+            document.getElementById("endingScore").innerHTML = totalScore;
         </script>
     </div>
 </div>

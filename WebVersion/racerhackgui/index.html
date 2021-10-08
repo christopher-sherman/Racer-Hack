@@ -23,7 +23,6 @@
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
         <div id="unity-build-title">Naprock Project</div>
-        <button id="next-question" onclick="moveCharacter()">NEXT</button>
       </div>
     </div>
     <script>
@@ -46,6 +45,7 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var mobileWarning = document.querySelector("#unity-mobile-warning");
+      var gameInstance = null;
 
       // By default Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
@@ -70,7 +70,6 @@
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
-      var gameInstance = null;
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
@@ -87,11 +86,10 @@
       };
       document.body.appendChild(script);
 
-      // Calling unity function
-      function moveCharacter() {
+       // Calling unity function
+       function moveCharacter() {
         gameInstance.SendMessage("player-idle-1", "Increment");
       }
-
     </script>
   </body>
 </html>

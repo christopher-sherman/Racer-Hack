@@ -3,6 +3,7 @@ var importantData = {
 }
 let questionNumber = 1;
 
+
 var userCode;
 async function submitData() {
   var input = codeeditor.getValue();
@@ -43,6 +44,21 @@ async function submitData() {
   // writeUserOutput(importantData, gamePryoperties)
 }
 
+var timeTaken;
+var startTime = performance.now();
+var endTime;
+var totalScore = 0;
+
+function calculateScore() {
+    endTime = performance.now();
+    timeTaken = endTime - startTime;
+    totalScore += (1000 - Math.round(timeTaken/1000));
+    document.getElementById("playerTotalScore").innerHTML = totalScore;
+    document.getElementById("endingScore").innerHTML = totalScore;
+    startTime = performance.now();
+}
+
+
 // THIS FUNCTION WILL CHECK THE ANSWERS. USERCODE IS THE OUTPUT FROM THE CONSOLE
 function show(importantData, userCode) {
   document.getElementById("output").innerHTML = importantData.data.output; //output string
@@ -71,6 +87,10 @@ function show(importantData, userCode) {
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 1500);
     console.log('Yes');
     questionNumber++;
+    // FUNCTION TO ADD SCORE AND RESET TIMER
+        
+    calculateScore();
+
   } else {
     var x = document.getElementById("snackbarWrong");
     // Add the "show" class to DIV
@@ -86,3 +106,4 @@ function writeUserOutput(importantData, gameProperties) {
     playerOutput: importantData.data.output
   }, { merge: true });
 }
+

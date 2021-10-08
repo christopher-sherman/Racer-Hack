@@ -182,6 +182,9 @@ if (gameProperties.start === 1) {
     // checkingAnswer(gameProperties);
 }
 
+
+
+
 nextButton.addEventListener("click", (e) => {
     e.preventDefault();
     gameProperties.playerQuestionNumber++;
@@ -191,6 +194,8 @@ nextButton.addEventListener("click", (e) => {
     // show(importantData,gameProperties);
     checkScoreAndDisplayQuestions(gameProperties);
     outputQuestion(gameProperties);
+
+    
     // Unity Call
 
 });
