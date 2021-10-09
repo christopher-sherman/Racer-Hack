@@ -302,3 +302,15 @@ html {
     color: #4caf50;
 }
 
+#display-question{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+}
+
+#review-questions-container{  
+    text-align: center;  
+    border: 7px solid red;  
+    width: 300px;  
+    height: 200px;  
+    padding-top: 100px;  
+    }  

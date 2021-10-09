@@ -100,7 +100,8 @@ function retrieveQuestion(object, questionNumber) {
     const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
-        displayQuestionResultPage.appendChild(question);
+        //displayQuestionResultPage.appendChild(question);
+        document.getElementById('display-question-result-page').innerHTML = doc.data().Question;
     });
 }
 
@@ -108,7 +109,8 @@ function retrievePlayerAnswer(questionNumber) {
     const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {
         let question = document.createElement('body');
         question.textContent = doc.data().playerAnswer;
-        displayPlayerAnswerResultPage.appendChild(question);
+        //displayPlayerAnswerResultPage.appendChild(question);
+        document.getElementById('display-player-answer-result-page').innerHTML = doc.data().playerAnswer;
     });
 }
 
@@ -117,7 +119,8 @@ function retrieveModelAnswer(object, questionNumber) {
         console.log("Question number: " + object.questionNum);
         let question = document.createElement('body');
         question.textContent = doc.data().Solution;
-        displayModelAnswerResultPage.appendChild(question);
+        //displayModelAnswerResultPage.appendChild(question);
+        document.getElementById('display-model-answer-result-page').innerHTML = doc.data().Solution;
     });
 }
 

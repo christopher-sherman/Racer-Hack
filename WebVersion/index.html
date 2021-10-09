@@ -18,7 +18,7 @@
     <div class="left">
         <div class="gamescreen">
             <iframe id="racerhackgui" mozallowfullscreen="true" allow="autoplay; fullscreen"
-                src="/WebVersion/racerhackgui/index.html" style="border:0px #000000 none;" name="Racer Hack"
+                src="racerhackgui/index.html" style="border:0px #000000 none;" name="Racer Hack"
                 scrolling="no" msallowfullscreen="true" allowfullscreen="true" webkitallowfullscreen="true"
                 allowtransparency="true" frameborder="0" marginheight="0px" marginwidth="0px" height="488px"
                 width="100%"></iframe>
@@ -46,8 +46,12 @@ int main()
         </div>
     </div>
     <!-- <input type="text" id="txt"> -->
-    <p>Score: <span id="playerTotalScore"></span></p>
-
+    <h1 style="padding: 0px; margin:0px;">Score: <span id="playerTotalScore"></span></h1>
+    <form id="game-end" style="padding-top:10px; margin: 0px;">
+        <div style="margin-left:450px;"> <!--Adjust margin here to center it on your screen-->
+        <button>FINISH</button>
+        </div>
+    </form>
     <script>
 
         var c = 0;
@@ -112,11 +116,9 @@ int main()
     <div id="hidden" class="hidden"></div>
     <div id="hidden2" class="hidden2"></div>
 </body>
-
+<div style="padding-left:30px;">
 <p class="question" id="display-question"></p>
-<form id="game-end">
-    <button>Finish</button>
-</form>
+</div>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>

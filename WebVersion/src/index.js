@@ -133,8 +133,9 @@ function outputQuestion(gameProperties) {
         console.log('Test');
         let question = document.createElement('body');
         question.textContent = doc.data().Question;
-        displayQuestion.append((gameProperties.playerQuestionNumber), question);
+        //displayQuestion.append((gameProperties.playerQuestionNumber), question);
         console.log("Question: " + gameProperties.questionsDisplayed);
+        document.getElementById("display-question").innerHTML = gameProperties.playerQuestionNumber + ": " + doc.data().Question;
     })
 }
 
