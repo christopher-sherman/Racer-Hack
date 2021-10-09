@@ -3,7 +3,6 @@ var importantData = {
 }
 let questionNumber = 1;
 
-
 var userCode;
 async function submitData() {
   var input = codeeditor.getValue();

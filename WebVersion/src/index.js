@@ -13,6 +13,10 @@ import {
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// Import player profile
+// import { Player } from './start.js';
+// Player;
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyChVP88vGhW1JGU2aH1befAeAyZLG30aFY",
@@ -156,13 +160,6 @@ function scoringSystem(gameProperties) {
     })
 }
 
-function timedCount() {
-    clearTimeout(timedCount);
-    clearInterval(timedCount);
-    t = setTimeout(timedCount, 1000);
-    // console.log(t - 28);
-}
-
 function checkSolution() {
     const accessingHint = onSnapshot(doc(db, "Questions", gameProperties.topic, gameProperties.difficulty, '0' + gameProperties.topicNum + '0' + gameProperties.difficultyNum + '0' + gameProperties.questionNum), (doc) => {
         userCode = doc.data().Solution;
@@ -172,8 +169,6 @@ function checkSolution() {
 function recordTag() {
 
 }
-
-timedCount();
 
 scoringSystem(gameProperties);
 if (gameProperties.start === 1) {
@@ -187,7 +182,6 @@ nextButton.addEventListener("click", (e) => {
     e.preventDefault();
     gameProperties.playerQuestionNumber++;
     gameProperties.showHint = 0;
-    timedCount();
     console.log("");
     // show(importantData,gameProperties);
     checkScoreAndDisplayQuestions(gameProperties);

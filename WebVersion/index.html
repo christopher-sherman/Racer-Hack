@@ -35,7 +35,7 @@ int main()
 }
 </textarea>
         <button class="SubmitBtn" type="submit" value="Submit"
-            onclick="submitData(); stopCount(); checkSolution()">SUBMIT</button>
+            onclick="submitData(); stopCount()">SUBMIT</button>
         <button id="next-question" class="NextBtn" type="submit" onclick="movePlayer()">NEXT</button>
         <form id="show-hint">
             <button class="NextBtn">Show Hint</button>
@@ -57,20 +57,6 @@ int main()
         var c = 0;
         var t;
         var timer_is_on = 0;
-
-        // var timeTaken;
-        // var startTime = performance.now();
-        // var endTime;
-        // var totalScore = 0;
-
-        // function calculateScore() {
-        //     endTime = performance.now();
-        //     timeTaken = endTime - startTime;
-        //     totalScore += (1000 - Math.round(timeTaken/1000));
-        //     document.getElementById("playerTotalScore").innerHTML = totalScore;
-        //     startTime = performance.now();
-        // }
-
 
         document.getElementById("playerTotalScore").innerHTML = totalScore;
 
@@ -117,7 +103,7 @@ int main()
     <div id="hidden2" class="hidden2"></div>
 </body>
 <div style="padding-left:30px;">
-<p class="question" id="display-question"></p>
+<p style="font-family: Arial, Helvetica, sans-serif" class="question" id="display-question"></p>
 </div>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -188,11 +174,11 @@ int main()
 
         <div class="content2">
             <form id="results-page">
-                <p>Your Score: <span id="endingScore"></span></p>
+                <p style="font-family: Arial, Helvetica, sans-serif">Your Score: <span id="endingScore"></span></p>
             </form>
         </div>
         <a href="src/end.html">
-            <button id="review-questions">Review Questions</button>
+            <button>Review Questions</button>
         </a>
 
         <script>

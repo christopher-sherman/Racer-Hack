@@ -29,7 +29,8 @@ const db = getFirestore(app);
 
 const displayQuestionResultPage = document.querySelector('#display-question-result-page');
 const displayPlayerAnswerResultPage = document.querySelector('#display-player-answer-result-page');
-const displayModelAnswerResultPage = document.querySelector('#display-model-answer-result-page');
+const displaySampleCodeResultPage = document.querySelector('#display-sample-code-result-page');
+const displayExpectedlAnswerResultPage = document.querySelector('#display-expected-answer-result-page');
 
 const object = {
     gameNum: 1,
@@ -40,13 +41,11 @@ const object = {
     difficultyNum: "1",
     questionNum: "1"
 }
-let playerQuestionNumber = 1;
-retrieveQuestionNumber(object, playerQuestionNumber);
-allocateTopic(object);
-allocateDifficulty(object);
-retrieveQuestion(object);
-retrievePlayerAnswer(object, 1);
-retrieveModelAnswer(object);
+
+retrieveQuestion(1);
+retrievePlayerAnswer(1);
+retrieveExpectedAnswer(1);
+retrieveSampleCode(1);
 
 function retrieveQuestionNumber(object, questionNumber) {
     const gettingQuestion = onSnapshot(doc(db, "Player", "Player 1", 'Past Attempts', 'Game ' + object.gameNum + '- Question ' + questionNumber), (doc) => {
@@ -96,11 +95,9 @@ function allocateDifficulty(num) {
     }
 }
 
-function retrieveQuestion(object, questionNumber) {
+function retrieveQuestion(questionNumber) {
     const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {
         let question = document.createElement('body');
-        question.textContent = doc.data().Question;
-        //displayQuestionResultPage.appendChild(question);
         document.getElementById('display-question-result-page').innerHTML = doc.data().Question;
     });
 }
@@ -108,19 +105,21 @@ function retrieveQuestion(object, questionNumber) {
 function retrievePlayerAnswer(questionNumber) {
     const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {
         let question = document.createElement('body');
-        question.textContent = doc.data().playerAnswer;
-        //displayPlayerAnswerResultPage.appendChild(question);
         document.getElementById('display-player-answer-result-page').innerHTML = doc.data().playerAnswer;
     });
 }
 
-function retrieveModelAnswer(object, questionNumber) {
+function retrieveExpectedAnswer(questionNumber) {
     const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {        
-        console.log("Question number: " + object.questionNum);
         let question = document.createElement('body');
-        question.textContent = doc.data().Solution;
-        //displayModelAnswerResultPage.appendChild(question);
-        document.getElementById('display-model-answer-result-page').innerHTML = doc.data().Solution;
+        document.getElementById('display-expected-answer-result-page').innerHTML = doc.data().Solution;
+    });
+}
+
+function retrieveSampleCode(questionNumber) {
+    const accessingQuestion = onSnapshot(doc(db, "Player", "Player 2", 'Past Attempts', 'Game 1- Question ' + questionNumber), (doc) => {        
+        let question = document.createElement('body');
+        document.getElementById('display-sample-code-result-page').innerHTML = doc.data().sampleCode;
     });
 }
 
@@ -132,31 +131,36 @@ const button4 = document.querySelector('#button4');
 button1.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 1);
-    retrieveQuestion(object, 1);
+    retrieveQuestion(1);
     retrievePlayerAnswer(1);
-    retrieveModelAnswer(object, 1);
+    retrieveExpectedAnswer(1);
+    retrieveSampleCode(1);
 });
 
 button2.addEventListener('click', (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 2);
-    retrieveQuestion(object, 2);
+    retrieveQuestion(2);
     retrievePlayerAnswer(2);
-    retrieveModelAnswer(object, 2);
+    retrieveExpectedAnswer(2);
+    retrieveSampleCode(2);
 });
 
 button3.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 3);
-    retrieveQuestion(object, 3);
+    retrieveQuestion(3);
     retrievePlayerAnswer(3);
-    retrieveModelAnswer(object, 3);
+    retrieveExpectedAnswer(3);
+    retrieveSampleCode(3);
+    
 });
 
 button4.addEventListener("click", (e) => {
     e.preventDefault();
     retrieveQuestionNumber(object, 4);
-    retrieveQuestion(object, 4);
+    retrieveQuestion(4);
     retrievePlayerAnswer(4);
-    retrieveModelAnswer(object, 4);
+    retrieveExpectedAnswer(4);
+    retrieveSampleCode(4);
 });
