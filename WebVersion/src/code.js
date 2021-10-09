@@ -52,7 +52,7 @@ var totalScore = 0;
 function calculateScore() {
     endTime = performance.now();
     timeTaken = endTime - startTime;
-    totalScore += (1000 - Math.round(timeTaken/1000));
+    totalScore += (300 - Math.round(timeTaken/5000));
     document.getElementById("playerTotalScore").innerHTML = totalScore;
     document.getElementById("endingScore").innerHTML = totalScore;
     startTime = performance.now();
