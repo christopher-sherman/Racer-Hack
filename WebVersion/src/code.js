@@ -58,6 +58,9 @@ function calculateScore() {
     startTime = performance.now();
 }
 
+function deductHintScore() {
+  totalScore -= 15;
+}
 
 // THIS FUNCTION WILL CHECK THE ANSWERS. USERCODE IS THE OUTPUT FROM THE CONSOLE
 function show(importantData, userCode) {

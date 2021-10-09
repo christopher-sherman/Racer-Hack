@@ -38,7 +38,7 @@ int main()
             onclick="submitData(); stopCount(); checkSolution()">SUBMIT</button>
         <button id="next-question" class="NextBtn" type="submit" onclick="movePlayer()">NEXT</button>
         <form id="show-hint">
-            <button class="NextBtn">Show Hint</button>
+            <button class="NextBtn" onclick="deductHintScore()">Show Hint</button>
         </form>
         <div class="consoleout">
             <h2 class="consoletitle">Console Output</h2>
@@ -58,19 +58,6 @@ int main()
         var t;
         var timer_is_on = 0;
 
-        // var timeTaken;
-        // var startTime = performance.now();
-        // var endTime;
-        // var totalScore = 0;
-
-        // function calculateScore() {
-        //     endTime = performance.now();
-        //     timeTaken = endTime - startTime;
-        //     totalScore += (1000 - Math.round(timeTaken/1000));
-        //     document.getElementById("playerTotalScore").innerHTML = totalScore;
-        //     startTime = performance.now();
-        // }
-
 
         document.getElementById("playerTotalScore").innerHTML = totalScore;
 
@@ -79,7 +66,10 @@ int main()
             document.getElementById("racerhackgui").contentWindow.moveCharacter();
         }
 
-
+        function deductHintScore() {
+            totalScore -= 15;
+            document.getElementById("playerTotalScore").innerHTML = totalScore;
+        }
 
         function timedCount() {
             document.getElementById("txt").value = c;
