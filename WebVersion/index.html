@@ -36,7 +36,7 @@ int main()
 </textarea>
         <button class="SubmitBtn" type="submit" value="Submit"
             onclick="submitData(); stopCount(); checkSolution()">SUBMIT</button>
-        <button id="next-question" class="NextBtn" type="submit" onclick="movePlayer()">NEXT</button>
+        <button id="next-question" class="NextBtn" type="submit" onclick="movePlayer(); resetHintShown()">NEXT</button>
         <form id="show-hint">
             <button class="NextBtn" onclick="deductHintScore()">Show Hint</button>
         </form>
@@ -57,6 +57,7 @@ int main()
         var c = 0;
         var t;
         var timer_is_on = 0;
+        var hintShown = 0;
 
 
         document.getElementById("playerTotalScore").innerHTML = totalScore;
@@ -67,8 +68,15 @@ int main()
         }
 
         function deductHintScore() {
-            totalScore -= 15;
-            document.getElementById("playerTotalScore").innerHTML = totalScore;
+            if (hintShown == 0){
+                totalScore -= 5;
+                document.getElementById("playerTotalScore").innerHTML = totalScore;
+                hintShown = 1;
+            }
+        }
+
+        function resetHintShown() {
+            hintShown = 0;
         }
 
         function timedCount() {

@@ -52,15 +52,12 @@ var totalScore = 0;
 function calculateScore() {
     endTime = performance.now();
     timeTaken = endTime - startTime;
-    totalScore += (300 - Math.round(timeTaken/5000));
+    totalScore += (100 - Math.round(timeTaken/5000));
     document.getElementById("playerTotalScore").innerHTML = totalScore;
     document.getElementById("endingScore").innerHTML = totalScore;
     startTime = performance.now();
 }
 
-function deductHintScore() {
-  totalScore -= 15;
-}
 
 // THIS FUNCTION WILL CHECK THE ANSWERS. USERCODE IS THE OUTPUT FROM THE CONSOLE
 function show(importantData, userCode) {
